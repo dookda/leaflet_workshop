@@ -1,0 +1,8 @@
+.card-map {
+    /* padding: 0px !important; */
+}
+
+#map {
+    height: 600px;
+    width: 100%;
+}

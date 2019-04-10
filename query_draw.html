@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Draw</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <!-- leaflet -->
+    <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.draw/docs/examples/libs/leaflet.css" />
+    <script src="http://leaflet.github.io/Leaflet.draw/docs/examples/libs/leaflet-src.js"></script>
+
+    <script src="http://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
+
+    <script src="../Leaflet.draw-develop/src/Leaflet.draw.js"></script>
+    <script src="../Leaflet.draw-develop//src/Leaflet.Draw.Event.js"></script>
+    <link rel="stylesheet" href="../Leaflet.draw-develop/src/leaflet.draw.css" />
+
+
+    <script src="../Leaflet.draw-develop/src/Toolbar.js"></script>
+    <script src="../Leaflet.draw-develop/src/Tooltip.js"></script>
+
+    <script src="../Leaflet.draw-develop/src/ext/GeometryUtil.js"></script>
+    <script src="../Leaflet.draw-develop/src/ext/LatLngUtil.js"></script>
+    <script src="../Leaflet.draw-develop/src/ext/LineUtil.Intersect.js"></script>
+    <script src="../Leaflet.draw-develop/src/ext/Polygon.Intersect.js"></script>
+    <script src="../Leaflet.draw-develop/src/ext/Polyline.Intersect.js"></script>
+    <script src="../Leaflet.draw-develop/src/ext/TouchEvents.js"></script>
+
+    <script src="../Leaflet.draw-develop/src/draw/DrawToolbar.js"></script>
+    <script src="../Leaflet.draw-develop/src/draw/handler/Draw.Feature.js"></script>
+    <script src="../Leaflet.draw-develop/src/draw/handler/Draw.SimpleShape.js"></script>
+    <script src="../Leaflet.draw-develop/src/draw/handler/Draw.Polyline.js"></script>
+    <script src="../Leaflet.draw-develop/src/draw/handler/Draw.Marker.js"></script>
+    <script src="../Leaflet.draw-develop/src/draw/handler/Draw.Circle.js"></script>
+    <script src="../Leaflet.draw-develop/src/draw/handler/Draw.CircleMarker.js"></script>
+    <script src="../Leaflet.draw-develop/src/draw/handler/Draw.Polygon.js"></script>
+    <script src="../Leaflet.draw-develop/src/draw/handler/Draw.Rectangle.js"></script>
+
+
+    <script src="../Leaflet.draw-develop/src/edit/EditToolbar.js"></script>
+    <script src="../Leaflet.draw-develop/src/edit/handler/EditToolbar.Edit.js"></script>
+    <script src="../Leaflet.draw-develop/src/edit/handler/EditToolbar.Delete.js"></script>
+
+    <script src="../Leaflet.draw-develop/src/Control.Draw.js"></script>
+
+    <script src="../Leaflet.draw-develop/src/edit/handler/Edit.Poly.js"></script>
+    <script src="../Leaflet.draw-develop/src/edit/handler/Edit.SimpleShape.js"></script>
+    <script src="../Leaflet.draw-develop/src/edit/handler/Edit.Rectangle.js"></script>
+    <script src="../Leaflet.draw-develop/src/edit/handler/Edit.Marker.js"></script>
+    <script src="../Leaflet.draw-develop/src/edit/handler/Edit.CircleMarker.js"></script>
+    <script src="../Leaflet.draw-develop/src/edit/handler/Edit.Circle.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../Leaflet.draw-develop/src/leaflet.draw.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <div class="container">
+            <!-- Brand -->
+            <a class="navbar-brand" href="#">Navbar</a>
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="query.html">query</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="draw.html">draw</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="query_draw.html">query (draw)</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding: 10px">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-map">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img
+                            src="http://www.cgi.uru.ac.th/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=th:province_4326">
+                        <span>ขอบเขตจังหวัด</span>
+                    </div>
+                </div>
+                <p></p>
+                <div class="card">
+                </div>
+            </div>
+        </div>
+        <p></p>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table" id="myTable" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>รหัส</th>
+                                    <th>ชื่อ</th>
+                                    <th>นามสกุล</th>
+                                    <th>ตำบล</th>
+                                    <th>อำเภอ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+<script src="query_draw.js"></script>
+
+</html>
